@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>From Html</title>
+</head>
+<body>
+    <form action="/add" method="post">
+        {% csrf_token %}
+        <h2>Vehicle Details</h2>
+        Vehicle No: <input type="text" name="vehicle-no" id="vehicleNo"> <br>
+        Brand: <input type="text" name="brand" id="brand"> <br>
+        Model: <input type="text" name="model" id="model"> <br>
+        <input type="submit" value="Add">
+    </form>
+<div> 
+    {% for vehicle in vehicles %}
+    <h2>{{ vehicle.vehicleNo }}</h2>
+    <span>{{ vehicle.brand }}</span>
+    <span>{{ vehicle.model }}</span>
+
+    <form action="/delete" method="post">
+        {% csrf_token %}
+        <input type="text" name="vehicleNo" value="{{ vehicle.vehicleNo }}" hidden>
+        <input type="submit" value="delete" />
+    </form>
+    {% endfor %}
+</div>
+</body>
+</html>
