@@ -18,6 +18,4 @@ from django.urls import include, path
 
 urlpatterns = [
     path('', include('ecom.urls')),
-    path('polls/', include('ecom.urls')),
-    path('admin/', admin.site.urls),
 ]

@@ -10,10 +10,13 @@
     <form action="/add" method="post">
         {% csrf_token %}
         <h2>Vehicle Details</h2>
-        Vehicle No: <input type="text" name="vehicle-no" id="vehicleNo"> <br>
-        Brand: <input type="text" name="brand" id="brand"> <br>
-        Model: <input type="text" name="model" id="model"> <br>
+        Vehicle No: <input type="text" name="vehicle-no" id="vehicleNo"> <br> <br>
+        Brand: <input type="text" name="brand" id="brand"> <br> <br>
+        Model: <input type="text" name="model" id="model"> <br> <br>
         <input type="submit" value="Add">
+        <button type="button" value="Update">Update</button>
+        <button type="button" value="Delete">Delete</button>
+        <input type="button" value="Search" onclick="window.open('http://localhost:8000/search','popUpWindow','height=300,width=700,left=200,top=100,resizable=yes');">
     </form>
 <div> 
     {% for vehicle in vehicles %}
