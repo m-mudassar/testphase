@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add service</title>
+</head>
+
+<body>
+    <div>
+        <form action="/add_service" method="post">
+            {% csrf_token %}
+            <input type="text" name="vehicle-no" id="vehicleNO" class="vehicle-no" hidden>
+            Service Id <input type="text" name="service_id" id="serviceID" required> <br> <br>
+            Type <input type="text" name="service_type" id="serviceType" required> <br><br>
+            <input type="submit" value="Done">
+        </form>
+    </div>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const vehicleNo = urlParams.get('vehicleNo');
+        document.querySelector('.vehicle-no').value = vehicleNo
+
+        console.log(vehicleNo)
+
+        if (window.history.replaceState) {
+            window.history.replaceState(null, null, window.location.href);
+        }
+
+        window.addEventListener('load', function () {
+
+        })
+
+        if (vehicleNo) {
+
+        } else {
+            window.close();
+        }
+    </script>
+</body>
+
+</html>

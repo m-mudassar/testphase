@@ -7,6 +7,6 @@ class Vehicle(models.Model):
     model = models.CharField(max_length=12)
 
 class Service(models.Model):
-    serviceID = models.IntegerField
-    type = models.CharField(max_length=10, default="null")
+    serviceID = models.IntegerField(primary_key=True, default=0)
+    service_type = models.CharField(max_length=10, default="null")
     vehicleNo = models.ForeignKey(Vehicle, on_delete=models.CASCADE)

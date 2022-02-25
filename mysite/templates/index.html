@@ -1,35 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>From Html</title>
 </head>
+
 <body>
     <form action="/add" method="post">
         {% csrf_token %}
         <h2>Vehicle Details</h2>
-        Vehicle No: <input type="text" name="vehicle-no" id="vehicleNo"> <br> <br>
-        Brand: <input type="text" name="brand" id="brand"> <br> <br>
-        Model: <input type="text" name="model" id="model"> <br> <br>
+        Vehicle No: <input type="text" name="vehicle-no" id="vehicleNo" class="vehicle-no" value="{{vehicle.vehicleNo}}"
+            required> <br> <br>
+        Brand: <input type="text" name="brand" id="brand" value="{{vehicle.brand}}" required> <br> <br>
+        Model: <input type="text" name="model" id="model" value="{{vehicle.model}}" required> <br> <br>
         <input type="submit" value="Add">
         <button type="button" value="Update">Update</button>
         <button type="button" value="Delete">Delete</button>
-        <input type="button" value="Search" onclick="window.open('http://localhost:8000/search','popUpWindow','height=300,width=700,left=200,top=100,resizable=yes');">
+        <input type="button" value="Search"
+            onclick="window.open('http://localhost:8000/search','Popup','height=300,width=700,left=200,top=100,resizable=yes');">
     </form>
-<div> 
-    {% for vehicle in vehicles %}
-    <h2>{{ vehicle.vehicleNo }}</h2>
-    <span>{{ vehicle.brand }}</span>
-    <span>{{ vehicle.model }}</span>
 
-    <form action="/delete" method="post">
-        {% csrf_token %}
-        <input type="text" name="vehicleNo" value="{{ vehicle.vehicleNo }}" hidden>
-        <input type="submit" value="delete" />
-    </form>
-    {% endfor %}
-</div>
+    <br>
+    <br>
+
+    <button type="button" onclick="
+    var vehicleNo = document.querySelector('.vehicle-no').value;
+    window.open('http://localhost:8000/add_service?vehicleNo=' + vehicleNo ,'popUpWindow','height=300,width=700,left=200,top=100,resizable=yes');
+    ">Add Service details</button>
+
+    <br>
+    <br>
+    <div>
+        <table>
+            <tr>
+                <th style="background-color: gray;">serviceId</th>
+                <th style="background-color: gray;">Type</th>
+                <th style="background-color: gray;">update</th>
+                <th style="background-color: gray;">delete</th>
+            </tr>
+
+            {% for service in services %}
+            <tr>
+                <td>{{ service.serviceID }}</td>
+                <td>{{ service.service_type }}</td>
+                <td><a href="">update</a></td>
+                <td><a href="">delete</a></td>
+            </tr>
+            {% endfor %}
+
+        </table>
+    </div>
+    <script>
+        window.addEventListener('focus', function (event) {
+            window.location.reload();
+        });
+    </script>
 </body>
+
 </html>

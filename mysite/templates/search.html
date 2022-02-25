@@ -1,16 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Search</title>
 </head>
+
 <body>
-    <form action="/search" method="post">
+    <form action="/search" method="post" id="myform">
         {% csrf_token %}
-        <input type="text" name="vehicle-no" id="vehicleNo"> <br>
-        <input type="submit" value="search" onclick="window.close()"/>
+        <input type="text" value="{{ request }}" class="request" hidden>
+        <input type="text" name="vehicle-no" id="vehicleNo"> <br> <br>
+        <input type="submit" value="Done">
     </form>
+
+
+    <script>
+        if (document.querySelector('.request').value == 'ok') {
+            window.close();
+        }
+    </script>
 </body>
+
 </html>
