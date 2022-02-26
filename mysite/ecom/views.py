@@ -6,6 +6,7 @@ from django.shortcuts import redirect
 from ecom import models
 from ecom import models
 from ecom.models import Vehicle, Service
+from django.core.exceptions import ObjectDoesNotExist
 
 args = None
 
@@ -33,36 +34,38 @@ def add(request):
         model = request.POST["model"]
         vehicle = Vehicle(vehicleNo=vehicleNo, brand=brand, model=model)
         vehicle.save()
-        print("data is going to database")
+
         global args
         args = None
+        
     return redirect('/')
 
 
 def delete(request):
     if request.method == "POST":
-        vehicleid = request.POST["vehicleNo"]
-        print(vehicleid)
-        instance = Vehicle.objects.get(vehicleNo=vehicleid)
-        print("delete is working")
-        instance.delete()
-    return redirect('/')
+        vehicle_no = request.POST["vehicle-no"]
+        vehicle = Vehicle.objects.get(vehicleNo=vehicle_no)
+        vehicle.delete()
+
+        global args
+        args = None
+
+        return render(request, 'delete.html', {'request': 'ok'})
+    return render(request, 'delete.html')
 
 
 def search(request):
     if request.method == "POST":
         vehicle_no = request.POST["vehicle-no"]
-        vehicle = Vehicle.objects.get(vehicleNo=vehicle_no)
-        service = Service.objects.filter(vehicleNo=vehicle)
 
-        print("vehicle in search")
-        print(vehicle)
-        print("service in search")
-        print(service)
-        print("search is working")
+        try:
+            vehicle = Vehicle.objects.get(vehicleNo=vehicle_no)
+            service = Service.objects.filter(vehicleNo=vehicle)
+            global args
+            args = {'services': service, 'vehicle': vehicle}
+        except ObjectDoesNotExist:
+            return render(request, 'search.html', {'request': 'Record not found'})
 
-        global args
-        args = {'services': service, 'vehicle': vehicle}
         return render(request, 'search.html', {'request': 'ok'})
     return render(request, 'search.html')
 
@@ -90,8 +93,29 @@ def add_service(request):
 
 
 def update_service(request):
-    return 0
+    if request.method == "POST":
+        vehicle_no = request.POST["vehicle-no"]
+        vehicle = Vehicle.objects.get(vehicleNo=vehicle_no)
+        vehicle.delete()
+        print("delete success")
+        return render(request, 'delete.html', {'request': 'ok'})
+    return render(request, 'delete.html')
 
 
 def delete_service(request):
-    return 0
+    if request.method == "GET":
+        vehicle_no = request.GET["vehicleid"]
+        service_id = request.GET["serviceid"]
+        print(vehicle_no, service_id)
+        try:
+            vehicle = Vehicle.objects.get(vehicleNo=vehicle_no)
+            service = Service.objects.filter(serviceID=service_id)
+            service.delete()            
+            services = Service.objects.filter(vehicleNo=vehicle)
+            global args
+            args = {'services': services, 'vehicle': vehicle}
+        except ObjectDoesNotExist:
+            return redirect('/')
+
+        return redirect('/')
+    return redirect('/')

@@ -11,5 +11,5 @@ urlpatterns = [
     path('search', views.search, name="search"),
     path('add_service', views.add_service, name="add_service"),
     path('update_service', views.update_service, name="update_service"),
-    path('delte_service', views.delete_service, name="delete_service")
+    path('delete_service', views.delete_service, name="delete_service")
 ]

@@ -18,7 +18,8 @@
         Model: <input type="text" name="model" id="model" value="{{vehicle.model}}" required> <br> <br>
         <input type="submit" value="Add">
         <button type="button" value="Update">Update</button>
-        <button type="button" value="Delete">Delete</button>
+        <button type="button" value="Delete"
+        onclick="window.open('http://localhost:8000/delete','Popup','height=300,width=700,left=200,top=100,resizable=yes');">Delete</button>
         <input type="button" value="Search"
             onclick="window.open('http://localhost:8000/search','Popup','height=300,width=700,left=200,top=100,resizable=yes');">
     </form>
@@ -47,7 +48,7 @@
                 <td>{{ service.serviceID }}</td>
                 <td>{{ service.service_type }}</td>
                 <td><a href="">update</a></td>
-                <td><a href="">delete</a></td>
+                <td><a href="http://localhost:8000/delete_service?serviceid={{ service.serviceID }}&vehicleid={{vehicle.vehicleNo}}">delete</a></td>
             </tr>
             {% endfor %}
 

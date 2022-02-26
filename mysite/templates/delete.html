@@ -5,31 +5,21 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Search</title>
+    <title>Delete Vehicle</title>
 </head>
 
 <body>
-    <form action="/search" method="post" id="myform">
+    <form action="/delete" method="post">
         {% csrf_token %}
         <input type="text" value="{{ request }}" class="request" hidden>
         <input type="text" placeholder="Enter vehicle number" name="vehicle-no" id="vehicleNo"> <br> <br>
         <input type="submit" value="Done">
     </form>
 
-    <br>
-    <br>
-
-    <h2 class="status" style="visibility:hidden">{{ request }}</h2>
 
     <script>
         if (document.querySelector('.request').value == 'ok') {
             window.close();
-        }
-        if (document.querySelector('.request').value == 'Record not found') {
-            let status = document.querySelector(".status");
-            status.style.visibility = "visible";
-            status.style.color = "red";
-            console.log("not found")
         }
     </script>
 </body>
